@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guardian Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #1a202c; /* Dark background */
+      color: #e2e8f0; /* Light text color */
+    }
+    .search-input {
+      background-color: #2d3748; /* Darker input background */
+      border-color: #4a5568; /* Darker border */
+      color: #e2e8f0; /* Light text color */
+    }
+    .search-input::placeholder {
+      color: #a0aec0; /* Lighter placeholder text */
+    }
+    .profile-card {
+      background-color: #2d3748; /* Darker card background */
+      border-color: #4a5568; /* Darker card border */
+    }
+  </style>
+</head>
+<body class="p-6">
+<div class="max-w-7xl mx-auto">
+  <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-2 text-center">Guardian Dashboard</h1>
+  <p class="text-xl text-gray-400 mb-8 text-center">Your personal privacy guardian. Analyze and understand digital footprints with a focus on protection.</p>
+
+  <!-- Search Input Fields -->
+  <div class="flex flex-col md:flex-row gap-4 mb-8">
+    <input type="text" id="name-search-input" placeholder="Search for a name..." class="w-full px-4 py-2 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 search-input">
+    <input type="text" id="birthdate-search-input" placeholder="Search by birthdate (DD-MM-YYYY)..." class="w-full px-4 py-2 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 search-input">
+  </div>
+
+  <div id="profiles-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Profiles will be dynamically injected here by JavaScript -->
+  </div>
+</div>
+
+<script>
+  // Directly embed the data to avoid fetch errors
+  let profilesData = {
+    "Geetika Arora": {
+      "instagram": "https://www.instagram.com/arora_geetika13?igsh=MWFpZzZueWNhMnBneA==",
+      "employed": null,
+      "student": "Yes",
+      "facebook": "https://www.facebook.com/share/15BvnLei5dw/",
+      "birthdate": "13-10-2005",
+      "linkedin": "https://www.linkedin.com/in/geetika-arora-898b89277/?originalSubdomain=in",
+      "psychological_profile": "Interested in Marketing. Employed in a college with an internship and is doing SOL."
+    },
+    "Upasana monga": {
+      "instagram": "https://www.instagram.com/monga_upasna?igsh=MWlkeG1tdnNrNmR4dQ==",
+      "employed": null,
+      "student": "Yes",
+      "facebook": "https://www.facebook.com/share/1G2VbBoorN/",
+      "birthdate": "08-06-1998",
+      "linkedin": "https://www.linkedin.com/in/upasna-monga99/?originalSubdomain=in",
+      "psychological_profile": "Expert in Google and Meta Ads. Specialist in web designing. Working in a SMMA Agency."
+    },
+    "Vanshika Bhatia": {
+      "instagram": "https://www.instagram.com/vanshika.1u?igsh=N25lenB2dmRhOXd3",
+      "employed": null,
+      "student": "Yes",
+      "facebook": "https://www.facebook.com/share/1ANW2zUnhJ/",
+      "birthdate": "29-07-2001",
+      "linkedin": null,
+      "psychological_profile": "Not enough data."
+    },
+    "Kalash Bhatia": {
+      "instagram": "https://www.instagram.com/kalash_bhatia30?igsh=MmVkNzdjMTlhYm56",
+      "employed": "Yes",
+      "student": null,
+      "facebook": "https://www.facebook.com/share/1G2VbBoorN/",
+      "birthdate": "30-11-2008",
+      "linkedin": "https://www.linkedin.com/in/kalash-bhatia-235049206",
+      "psychological_profile": "Student at Aadharshila Vidyapeeth. Interested in arts and creative things."
+    },
+    "Yatharth tandon": {
+      "instagram": "https://www.instagram.com/tandonyathaarth?igsh=MXZpcHJwa2V4MHJnNA==",
+      "employed": "Yes",
+      "student": null,
+      "facebook": null,
+      "birthdate": "29-11-2008",
+      "linkedin": null,
+      "psychological_profile": "Student at Aadharshila Vidyapeeth. Interested in music and plays piano."
+    },
+    "Anvi Jain": {
+      "instagram": "https://www.instagram.com/notttt._.foundd?igsh=eDd6ZmtoN2hycXEy",
+      "employed": "Yes",
+      "student": null,
+      "facebook": null,
+      "birthdate": "04-04-2009",
+      "linkedin": null,
+      "psychological_profile": "Student at Aadharshila Vidyapeeth. Did a diploma in art."
+    },
+    "Arvind Khatter": {
+      "instagram": "https://www.instagram.com/artticus09?igsh=MThxNnhpa3UxbzR6bw==",
+      "employed": null,
+      "student": "Yes",
+      "facebook": null,
+      "birthdate": "19-07-2008",
+      "linkedin": "https://www.linkedin.com/in/arvind-artticus-khatter",
+      "psychological_profile": "Certified ethical hacker by Craw. Interested in tech and has certifications from Google."
+    },
+    "Hazel Khatter": {
+      "instagram": null,
+      "employed": "Yes",
+      "student": null,
+      "facebook": null,
+      "birthdate": "16-10-2002",
+      "linkedin": "https://www.linkedin.com/in/hazel-khatter",
+      "psychological_profile": "Did IBFIA course and is employed at Google. Multitasking. Interested in literature and is also a writer for Collider."
+    },
+    "Vinayak Chauhan": {
+      "instagram": "https://www.instagram.com/vinayak_chauhan?igsh=MmdtcHJxajBscHp0",
+      "employed": "Yes",
+      "student": null,
+      "facebook": null,
+      "birthdate": "03-11-2008",
+      "linkedin": "https://www.linkedin.com/in/vinayakchauhan",
+      "psychological_profile": "Employed in Google and has experience in many organizations. Multitasks and manages things."
+    },
+    "Gauri Gupta": {
+      "instagram": "https://www.instagram.com/_gauri__gupta__?igsh=b2xubmh1aXY2MG9p",
+      "employed": "Yes",
+      "student": null,
+      "facebook": null,
+      "birthdate": "12-09-2003",
+      "linkedin": "https://www.linkedin.com/in/gaurigupta-",
+      "psychological_profile": "Did IBFIA from Shaheed Rajguru and is currently self-employed."
+    }
+  };
+
+  const profilesContainer = document.getElementById('profiles-container');
+  const nameSearchInput = document.getElementById('name-search-input');
+  const birthdateSearchInput = document.getElementById('birthdate-search-input');
+
+  function renderProfiles() {
+    const nameQuery = nameSearchInput.value.toLowerCase();
+    const birthdateQuery = birthdateSearchInput.value.trim();
+
+    if (nameQuery === '' && birthdateQuery === '') {
+      profilesContainer.innerHTML = '';
+      return;
+    }
+
+    profilesContainer.innerHTML = '';
+
+    Object.keys(profilesData).forEach(name => {
+      const profile = profilesData[name];
+
+      const nameMatches = name.toLowerCase().includes(nameQuery);
+      const birthdateMatches = birthdateQuery === '' || (profile.birthdate && profile.birthdate.includes(birthdateQuery));
+
+      if (nameMatches && birthdateMatches) {
+        const card = document.createElement('div');
+        card.className = 'profile-card rounded-xl shadow-lg p-6 transition-transform transform hover:scale-105';
+
+        let linksHtml = '';
+        if (profile.instagram) {
+          linksHtml += `<a href="${profile.instagram}" target="_blank" class="text-blue-400 hover:underline">Instagram</a>`;
+        }
+        if (profile.facebook) {
+          if (linksHtml) linksHtml += ' | ';
+          linksHtml += `<a href="${profile.facebook}" target="_blank" class="text-blue-400 hover:underline">Facebook</a>`;
+        }
+        if (profile.linkedin) {
+          if (linksHtml) linksHtml += ' | ';
+          linksHtml += `<a href="${profile.linkedin}" target="_blank" class="text-blue-400 hover:underline">LinkedIn</a>`;
+        }
+
+        let statusHtml = '';
+        if (profile.employed) {
+          statusHtml += `<span class="bg-green-700 text-green-200 text-xs font-semibold px-2.5 py-0.5 rounded-full mr-2">Employed</span>`;
+        }
+        if (profile.student) {
+          statusHtml += `<span class="bg-blue-700 text-blue-200 text-xs font-semibold px-2.5 py-0.5 rounded-full">Student</span>`;
+        }
+
+        card.innerHTML = `
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-2xl font-bold text-gray-100">${name}</h2>
+                            <span class="text-sm text-gray-400">${profile.birthdate}</span>
+                        </div>
+                        <div class="mb-4">
+                            ${statusHtml}
+                        </div>
+                        <div class="text-gray-300 mb-4">
+                            <p class="font-semibold text-gray-200 mb-1">Psychological Profile:</p>
+                            <p class="text-sm">${profile.psychological_profile || 'Not Available'}</p>
+                        </div>
+                        ${linksHtml ? `<div class="mt-4 border-t border-gray-600 pt-4 text-sm text-gray-400">${linksHtml}</div>` : ''}
+                    `;
+        profilesContainer.appendChild(card);
+      }
+    });
+  }
+
+  // Remove the 'input' event listeners to only search on 'Enter'
+  // nameSearchInput.addEventListener('input', renderProfiles);
+  // birthdateSearchInput.addEventListener('input', renderProfiles);
+
+  nameSearchInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      renderProfiles();
+    }
+  });
+
+  birthdateSearchInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      renderProfiles();
+    }
+  });
+</script>
+</body>
+</html>
