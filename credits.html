@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credits</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+    .hacker-text::after {
+      content: '_';
+      animation: blink 1s step-end infinite;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-gray-200 flex items-center justify-center h-screen flex-col p-6">
+<div class="container text-center">
+  <div class="row row-cols-4">
+    <div class="col">Column</div>
+    <div class="col">Column</div>
+    <div class="col">Column</div>
+    <div class="col">Column</div>
+  </div>
+</div>
+</body>
+</html>
