@@ -248,11 +248,12 @@
           linksHtml += `<a href="${profile.facebook}" target="_blank" class="text-blue-400 hover:underline">Facebook</a>`;
         }
         if (profile.linkedin) {
-       +   if (linksHtml) linksHt
-          ml += ' | ';
+          if (linksHtml) { // Check if linksHtml already has content (e.g., Instagram/Facebook)
+            linksHtml += ' | ';
+          }
+
           linksHtml += `<a href="${profile.linkedin}" target="_blank" class="text-blue-400 hover:underline">LinkedIn</a>`;
         }
-
         let statusHtml = '';
         if (profile.employed) {
           statusHtml += `<span class="bg-green-700 text-green-200 text-xs font-semibold px-2.5 py-0.5 rounded-full mr-2">Employed</span>`;
